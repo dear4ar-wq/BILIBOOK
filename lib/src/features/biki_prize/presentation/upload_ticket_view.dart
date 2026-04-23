@@ -71,6 +71,7 @@ class _UploadTicketViewState extends State<UploadTicketView> {
         imageFile: _selectedImage!,
         semCount: _selectedSem,
         seriesCount: _seriesCount,
+        ticketNumbers: _ticketNumberController.text.trim().isEmpty ? 'N/A' : _ticketNumberController.text.trim(),
       );
       if (mounted) {
         context.pop();
@@ -110,7 +111,7 @@ class _UploadTicketViewState extends State<UploadTicketView> {
               GestureDetector(
                 onTap: () => _showImageSourceActionSheet(),
                 child: Container(
-                  height: 300,
+                  height: 250,
                   width: double.infinity,
                   decoration: BoxDecoration(
                     color: Colors.grey.shade100,
@@ -126,9 +127,9 @@ class _UploadTicketViewState extends State<UploadTicketView> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(Icons.add_a_photo_outlined,
-                                size: 60, color: Colors.grey.shade400),
-                            const SizedBox(height: 16),
-                            const Text('Tap to capture or select ticket photo',
+                                size: 50, color: Colors.grey.shade400),
+                            const SizedBox(height: 12),
+                            const Text('Tap to capture ticket photo',
                                 style: TextStyle(
                                     color: Colors.grey,
                                     fontWeight: FontWeight.bold)),
@@ -136,6 +137,29 @@ class _UploadTicketViewState extends State<UploadTicketView> {
                         ),
                 ),
               ),
+              const SizedBox(height: 24),
+
+              // Ticket Number Input
+              const Text(
+                'ENTER TICKET NUMBER',
+                style: TextStyle(
+                    fontWeight: FontWeight.w900, fontSize: 13, letterSpacing: 1),
+              ),
+              const SizedBox(height: 12),
+              TextField(
+                controller: _ticketNumberController,
+                decoration: InputDecoration(
+                  hintText: 'e.g. 50A 12345',
+                  filled: true,
+                  fillColor: Colors.grey.shade50,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: BorderSide.none,
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                ),
+              ),
+
               const SizedBox(height: 32),
 
               // SEM Selection

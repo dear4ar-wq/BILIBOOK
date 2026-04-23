@@ -106,7 +106,7 @@ class _WalletViewState extends State<WalletView> {
           const Text('Available Balance', style: TextStyle(color: Colors.white70, fontSize: 14)),
           const SizedBox(height: 8),
           Text('₹${_balance.toStringAsFixed(2)}',
-              style: const TextStyle(color: Colors.white, fontSize: 36, fontWeight: FontWeight.black)),
+              style: const TextStyle(color: Colors.white, fontSize: 36, fontWeight: FontWeight.w900)),
           const SizedBox(height: 24),
           SizedBox(
             width: double.infinity,
@@ -154,7 +154,7 @@ class _WalletViewState extends State<WalletView> {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text('₹${request.amount}',
-                  style: const TextStyle(fontWeight: FontWeight.black, color: kNavyPrimary, fontSize: 14)),
+                  style: const TextStyle(fontWeight: FontWeight.w900, color: kNavyPrimary, fontSize: 14)),
               Container(
                 margin: const EdgeInsets.only(top: 4),
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
@@ -183,7 +183,7 @@ class _WalletViewState extends State<WalletView> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('WITHDRAW TO UPI', style: TextStyle(fontWeight: FontWeight.black, fontSize: 18)),
+            const Text('WITHDRAW TO UPI', style: TextStyle(fontWeight: FontWeight.w900, fontSize: 18)),
             const SizedBox(height: 24),
             TextField(
               controller: amountController,
