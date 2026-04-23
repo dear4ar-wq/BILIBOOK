@@ -45,7 +45,7 @@ class BookingInvoiceView extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text('OFFICIAL INVOICE', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.black, letterSpacing: 1)),
+                            const Text('OFFICIAL INVOICE', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w900, letterSpacing: 1)),
                             Text('ID: ${bookingData['id'] ?? 'BK-99824'}', style: const TextStyle(color: Colors.white70, fontSize: 12)),
                           ],
                         ),
@@ -94,7 +94,7 @@ class BookingInvoiceView extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const Text('Total Paid Amount', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                            Text('₹${bookingData['amount'] ?? 175}', style: const TextStyle(fontSize: 24, fontWeight: FontWeight.black, color: kNavyPrimary)),
+                            Text('₹${bookingData['amount'] ?? 175}', style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w900, color: kNavyPrimary)),
                           ],
                         ),
                         const SizedBox(height: 32),
@@ -133,7 +133,7 @@ class BookingInvoiceView extends StatelessWidget {
                                   child: Column(
                                     children: [
                                       const Icon(Icons.verified_user_rounded, color: Colors.green, size: 30),
-                                      const Text('VERIFIED', style: TextStyle(color: Colors.green, fontWeight: FontWeight.black, fontSize: 10)),
+                                      const Text('VERIFIED', style: TextStyle(color: Colors.green, fontWeight: FontWeight.w900, fontSize: 10)),
                                       const Text('TRUSTED PLATFORM', style: TextStyle(color: Colors.green, fontSize: 6)),
                                     ],
                                   ),
@@ -152,7 +152,7 @@ class BookingInvoiceView extends StatelessWidget {
                                     border: Border.all(color: kNavyPrimary, width: 4),
                                     shape: BoxShape.circle,
                                   ),
-                                  child: const Text('BIKIBOOK\nOFFICIAL\nSTAMP', textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.black, fontSize: 12)),
+                                  child: const Text('BIKIBOOK\nOFFICIAL\nSTAMP', textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.w900, fontSize: 12)),
                                 ),
                               ),
                             ),
