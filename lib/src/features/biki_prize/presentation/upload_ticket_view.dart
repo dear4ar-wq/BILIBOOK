@@ -19,8 +19,15 @@ class _UploadTicketViewState extends State<UploadTicketView> {
   bool _isUploading = false;
   final _repository = PrizeRepository();
   final _picker = ImagePicker();
+  final _ticketNumberController = TextEditingController();
 
   final List<int> _semOptions = [5, 10, 30, 50, 100, 200];
+
+  @override
+  void dispose() {
+    _ticketNumberController.dispose();
+    super.dispose();
+  }
 
   Future<void> _pickImage(ImageSource source) async {
     final XFile? pickedFile = await _picker.pickImage(source: source);
@@ -237,7 +244,7 @@ class _UploadTicketViewState extends State<UploadTicketView> {
                     const Text('Total Claim Fee:', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                     Text(
                       '₹${_selectedSem * 7 * _seriesCount}',
-                      style: TextStyle(color: kNavyPrimary, fontWeight: FontWeight.black, fontSize: 24),
+                      style: TextStyle(color: kNavyPrimary, fontWeight: FontWeight.w900, fontSize: 24),
                     ),
                   ],
                 ),
