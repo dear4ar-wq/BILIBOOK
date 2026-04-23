@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BikiBook Admin Console</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <img src="logo.png" alt="BikiBook Logo" class="sidebar-logo" id="admin-logo">
+            <h2>BIKIBOOK</h2>
+            <p style="font-size: 10px; color: var(--accent); letter-spacing: 2px;">WEB ADMIN</p>
+        </div>
+        <ul class="nav-links">
+            <li class="nav-item active" onclick="switchTab('dashboard')">
+                <i class="fas fa-chart-line"></i> Dashboard
+            </li>
+            <li class="nav-item" onclick="switchTab('draws')">
+                <i class="fas fa-ticket-alt"></i> Manage Draws
+            </li>
+            <li class="nav-item" onclick="switchTab('bookings')">
+                <i class="fas fa-history"></i> Bookings
+            </li>
+            <li class="nav-item" onclick="switchTab('payments')">
+                <i class="fas fa-wallet"></i> Payments
+            </li>
+            <li class="nav-item" onclick="switchTab('notices')">
+                <i class="fas fa-bell"></i> Notifications
+            </li>
+            <li class="nav-item" onclick="switchTab('prizes')">
+                <i class="fas fa-award"></i> Verify Tickets
+            </li>
+            <li class="nav-item" onclick="switchTab('withdrawals')">
+                <i class="fas fa-university"></i> Withdrawals
+            </li>
+            <li class="nav-item" onclick="switchTab('users')">
+                <i class="fas fa-users"></i> Users
+            </li>
+        </ul>
+        <div class="nav-item" onclick="logout()" style="margin-top: auto; color: #ff7675;">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="header">
+            <h1 id="page-title">Dashboard Overview</h1>
+            <div class="admin-profile" style="display: flex; align-items: center; gap: 10px;">
+                <span id="admin-email" style="font-weight: 700; font-size: 14px;">admin@bikibook.com</span>
+                <i class="fas fa-user-circle" style="font-size: 32px; color: var(--primary);"></i>
+            </div>
+        </header>
+
+        <!-- Dashboard Section -->
+        <section id="dashboard-section">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <i class="fas fa-receipt"></i>
+                    <span class="stat-value" id="stat-total-bookings">0</span>
+                    <span class="stat-label">Total Bookings</span>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-calendar-check"></i>
+                    <span class="stat-value" id="stat-active-draws">0</span>
+                    <span class="stat-label">Active Draws</span>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-clock"></i>
+                    <span class="stat-value" id="stat-pending-bookings">0</span>
+                    <span class="stat-label">Pending</span>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-user-friends"></i>
+                    <span class="stat-value" id="stat-total-users">0</span>
+                    <span class="stat-label">Total Users</span>
+                </div>
+            </div>
+
+            <div class="data-table-container">
+                <h3 style="margin-bottom: 20px;">Recent Bookings</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Ticket #</th>
+                            <th>Draw</th>
+                            <th>User Phone</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recent-bookings-table"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Draws Section -->
+        <section id="draws-section" style="display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 10px;">
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn" style="background: #a29bfe; color: white;" onclick="quickAddDraw('1PM Morning')">Add 1PM</button>
+                    <button class="btn" style="background: #fab1a0; color: white;" onclick="quickAddDraw('6PM Evening')">Add 6PM</button>
+                    <button class="btn" style="background: #00cec9; color: white;" onclick="quickAddDraw('8PM Night')">Add 8PM</button>
+                </div>
+                <button class="btn btn-primary" onclick="openModal('drawModal')">
+                    <i class="fas fa-plus"></i> Manual Draw
+                </button>
+            </div>
+            <div class="data-table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Draw Name</th>
+                            <th>Draw Date</th>
+                            <th>Price (₹)</th>
+                            <th>Result</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="draws-table"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Bookings Section -->
+        <section id="bookings-section" style="display: none;">
+            <div class="data-table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Ticket Number</th>
+                            <th>Draw Name</th>
+                            <th>Phone</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="all-bookings-table"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Withdrawals Section -->
+        <section id="withdrawals-section" style="display: none;">
+            <div class="data-table-container">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h3>Pending Withdrawal Requests</h3>
+                    <button class="btn btn-primary" onclick="loadWithdrawals()"><i class="fas fa-sync-alt"></i> Refresh</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>User ID / UPI</th>
+                            <th>Amount (₹)</th>
+                            <th>Bank/Details</th>
+                            <th>Requested On</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="withdrawals-list">
+                    <!-- Dynamic Rows -->
+                </tbody>
+            </table>
+            </div>
+        </section>
+
+        <!-- Withdrawals Section -->
+        <section id="withdrawals" class="section">
+            <div class="section-header">
+                <h2>Withdrawal Requests</h2>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>Amount</th>
+                        <th>UPI / Bank Details</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="withdrawals-list">
+                    <!-- Loaded dynamically -->
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Users Section -->
+        <section id="users-section" style="display: none;">
+            <div class="data-table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>User ID</th>
+                            <th>Phone Number</th>
+                            <th>Role</th>
+                            <th>Joined Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="all-users-table"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Payments Section -->
+        <section id="payments-section" style="display: none;">
+            <div class="data-table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Txn ID</th>
+                            <th>User Phone</th>
+                            <th>Amount (₹)</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="all-payments-table"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Prize Verification Section -->
+        <section id="prizes-section" style="display: none;">
+            <div class="data-table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Ticket</th>
+                            <th>SEM</th>
+                            <th>User</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="all-prizes-table"></tbody>
+                </table>
+            </div>
+        </section>
+        <!-- Notices Section -->
+        <section id="notices-section" style="display: none;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                <div class="data-table-container">
+                    <h3>Send Global Notice</h3>
+                    <p style="font-size: 12px; color: #888; margin-bottom: 20px;">This will show up for ALL users on the home screen.</p>
+                    <label>Notice Title</label>
+                    <input type="text" id="noticeTitle" placeholder="e.g. Big Prize Today!">
+                    <label>Message Content</label>
+                    <textarea id="noticeContent" rows="5" style="width:100%; padding:10px; border:1px solid #ddd;"></textarea>
+                    <button class="btn btn-primary" style="width:100%; margin-top:15px;" onclick="sendGlobalNotice()">Push Global Notice</button>
+                    
+                    <h3 style="margin-top: 40px; margin-bottom: 20px;">Active Notices</h3>
+                    <div id="active-notices-list" style="max-height: 200px; overflow-y: auto;"></div>
+                </div>
+
+                <div class="data-table-container">
+                    <h3>Send Private Message</h3>
+                    <p style="font-size: 12px; color: #888; margin-bottom: 20px;">Send a personal notification to a specific user via Phone.</p>
+                    <label>Recipient Phone Number</label>
+                    <input type="text" id="msgPhone" placeholder="Enter Phone Number">
+                    <label>Message</label>
+                    <textarea id="msgContent" rows="5" style="width:100%; padding:10px; border:1px solid #ddd;"></textarea>
+                    <button class="btn btn-accent" style="width:100%; margin-top:15px;" onclick="sendPrivateMessage()">Send Private Msg</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- PDF Upload Modal -->
+    <div id="pdfModal" class="modal">
+        <div class="modal-content">
+            <h3>Upload Official PDF Result</h3>
+            <p id="pdf-draw-name" style="font-weight: 700; color: var(--primary); margin-bottom: 20px;"></p>
+            <input type="hidden" id="pdf-draw-id">
+            <input type="file" id="pdfFile" accept="application/pdf" style="width: 100%; border: 1px solid #ddd; padding: 10px; margin-bottom: 20px;">
+            
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button class="btn" onclick="closeModal('pdfModal')" style="background: #eee;">Cancel</button>
+                <button class="btn btn-primary" onclick="uploadPDF()" style="flex: 1;">Upload PDF</button>
+            </div>
+            <p id="pdf-status" style="margin-top: 10px; font-size: 13px; color: var(--accent);"></p>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="drawModal" class="modal">
+        <div class="modal-content">
+            <h3>Add/Edit Draw</h3>
+            <label>Draw Name</label>
+            <input type="text" id="drawName" placeholder="e.g. Dear Morning">
+            <label>Draw Date</label>
+            <input type="datetime-local" id="drawDate">
+            <label>Ticket Price (₹)</label>
+            <input type="number" id="drawPrice" value="6">
+            
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button class="btn" onclick="closeModal('drawModal')" style="background: #eee;">Cancel</button>
+                <button class="btn btn-primary" onclick="saveDraw()" style="flex: 1;">Save Draw</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ticket Upload Modal -->
+    <div id="ticketModal" class="modal">
+        <div class="modal-content" style="max-width: 500px;">
+            <h3 id="target-draw-name" style="margin-bottom: 20px;">Manage Tickets</h3>
+            <input type="hidden" id="target-draw-id">
+            
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: 700;">Select SEM</label>
+                <select id="admin-ticket-sem" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd;" onchange="updateAdminCheckout()">
+                    <option value="5">5 SEM (₹35)</option>
+                    <option value="10">10 SEM (₹70)</option>
+                    <option value="30">30 SEM (₹210)</option>
+                    <option value="50">50 SEM (₹350)</option>
+                    <option value="100">100 SEM (₹700)</option>
+                    <option value="200">200 SEM (₹1400)</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: 700;">Series Count (e.g., 5)</label>
+                <input type="number" id="admin-series-count" value="1" min="1" max="50" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd;" oninput="updateAdminCheckout()">
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: 700;">Ticket Numbers (One per line)</label>
+                <textarea id="ticketList" placeholder="e.g. 50A 12345" style="height: 120px; width: 100%; border-radius: 8px; padding: 10px; border: 1px solid #ddd;"></textarea>
+            </div>
+
+            <div id="checkout-summary" style="padding: 15px; background: #f8f9fa; border-radius: 8px; margin-bottom: 20px; border: 1px solid #eee;">
+                <div style="display: flex; justify-content: space-between; font-weight: bold;">
+                    <span>Total Verification Fee:</span>
+                    <span id="admin-total-cost" style="color: var(--primary);">₹35</span>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 10px;">
+                <button class="btn btn-primary" onclick="processTicketUpload()" style="flex: 1;">Sync & Verify</button>
+                <button class="btn" onclick="closeModal('ticketModal')" style="flex: 1; background: #eee;">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Result Modal -->
+    <div id="resultModal" class="modal">
+        <div class="modal-content">
+            <h3>Publish Draw Result</h3>
+            <input type="hidden" id="result-draw-id">
+            <label>Winning Number</label>
+            <input type="text" id="winningNumber" placeholder="e.g. 50A 12345">
+            
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button class="btn" onclick="closeModal('resultModal')" style="background: #eee;">Cancel</button>
+                <button class="btn btn-accent" onclick="publishResult()" style="flex: 1; background: var(--accent);">Publish Result</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Preview Modal -->
+    <div id="imageModal" class="modal" onclick="closeModal('imageModal')">
+        <div class="modal-content" style="max-width: 80%; padding: 10px; background: none; box-shadow: none;">
+            <img id="preview-image" src="" style="width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+        </div>
+    </div>
+
+    <!-- Login Overlay -->
+    <div id="login-overlay" class="modal" style="display: flex; background: var(--primary);">
+        <div class="modal-content" style="text-align: center;">
+            <img src="logo.png" style="width: 100px; margin-bottom: 20px;">
+            <h2 style="margin-bottom: 20px; color: var(--primary);">Admin Login</h2>
+            <button class="btn" onclick="loginWithGoogle()" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px; border: 1px solid #ddd; background: white; color: #555; padding: 15px;">
+                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18">
+                Continue with Google
+            </button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="admin_logic.js?v=v_prize_update"></script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+# Codemagic CI/CD configuration for BikiBook
+workflows:
+  ios-release:
+    name: BikiBook iOS Release
+    max_build_duration: 60
+    instance_type: mac_mini_m1
+    environment:
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+    scripts:
+      - name: Install dependencies
+        script: |
+          flutter pub get
+      - name: Build iOS IPA
+        script: |
+          flutter build ipa --release --no-codesign
+    artifacts:
+      - build/ios/ipa/*.ipa
+    publishing:
+      email:
+        recipients:
+          - sagardeepmix@gmail.com # আপনার ইমেইল
+
+  android-release:
+    name: BikiBook Android Release
+    max_build_duration: 30
+    instance_type: mac_mini_m1
+    environment:
+      flutter: stable
+    scripts:
+      - name: Build Android APK
+        script: |
+          flutter pub get
+          flutter build apk --release
+    artifacts:
+      - build/app/outputs/flutter-apk/*.apk
+    publishing:
+      email:
+        recipients:
+          - sagardeepmix@gmail.com
