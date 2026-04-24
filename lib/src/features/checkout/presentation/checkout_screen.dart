@@ -4,6 +4,7 @@ import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../models/models.dart';
 import 'widgets/checkout_widgets.dart';
+import '../../biki_prize/data/prize_repository.dart';
 
 class CheckoutScreen extends StatefulWidget {
   final Draw draw;
@@ -51,6 +52,15 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           'ticket_number': widget.ticketNumber,
           'status': 'active',
         });
+
+        if (user != null) {
+          final prizeRepo = PrizeRepository();
+          await prizeRepo.addNotification(
+            title: 'Ticket Purchased!',
+            message: 'Your ticket ${widget.ticketNumber} for ${widget.draw.name} has been successfully booked.',
+            type: 'booking',
+          );
+        }
 
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(

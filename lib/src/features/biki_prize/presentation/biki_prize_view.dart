@@ -42,10 +42,19 @@ class _BikiPrizeViewState extends State<BikiPrizeView> {
                                 color: kNavyPrimary,
                                 letterSpacing: -1),
                           ),
-                          IconButton(
-                            onPressed: () => context.push('/notification_history'),
-                            icon: const Icon(Icons.notifications_active_outlined,
-                                color: kNavyPrimary, size: 28),
+                          Row(
+                            children: [
+                              IconButton(
+                                onPressed: () => context.push('/booking_history'),
+                                icon: const Icon(Icons.history_rounded,
+                                    color: kNavyPrimary, size: 28),
+                              ),
+                              IconButton(
+                                onPressed: () => context.push('/notification_history'),
+                                icon: const Icon(Icons.notifications_active_outlined,
+                                    color: kNavyPrimary, size: 28),
+                              ),
+                            ],
                           ),
                         ],
                       ),

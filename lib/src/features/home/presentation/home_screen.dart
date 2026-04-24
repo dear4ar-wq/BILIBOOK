@@ -7,6 +7,9 @@ import '../../profile/presentation/profile_view.dart';
 import '../../biki_prize/presentation/biki_prize_view.dart';
 import '../../../core/theme/app_theme.dart';
 
+import 'package:go_router/go_router.dart';
+import '../../biki_prize/data/prize_repository.dart';
+
 class BikiHomeScreen extends StatefulWidget {
   const BikiHomeScreen({super.key});
 
@@ -16,6 +19,7 @@ class BikiHomeScreen extends StatefulWidget {
 
 class _BikiHomeScreenState extends State<BikiHomeScreen> {
   int _currentIndex = 0;
+  final _repository = PrizeRepository();
 
   final List<Widget> _views = const [
     DrawListView(),
@@ -29,6 +33,44 @@ class _BikiHomeScreenState extends State<BikiHomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
+      appBar: AppBar(
+        backgroundColor: kIvoryBackground,
+        elevation: 0,
+        title: Image.asset('assets/images/logo.png', height: 40),
+        centerTitle: false,
+        actions: [
+          StreamBuilder<List<Map<String, dynamic>>>(
+            stream: _repository.streamUserNotifications(),
+            builder: (context, snapshot) {
+              final unreadCount = snapshot.data?.length ?? 0;
+              return Stack(
+                children: [
+                  IconButton(
+                    onPressed: () => context.push('/notification_history'),
+                    icon: const Icon(Icons.notifications_active_outlined, color: kNavyPrimary, size: 28),
+                  ),
+                  if (unreadCount > 0)
+                    Positioned(
+                      right: 8,
+                      top: 8,
+                      child: Container(
+                        padding: const EdgeInsets.all(4),
+                        decoration: const BoxDecoration(color: Colors.red, shape: BoxShape.circle),
+                        constraints: const BoxConstraints(minWidth: 16, minHeight: 16),
+                        child: Text(
+                          '$unreadCount',
+                          style: const TextStyle(color: Colors.white, fontSize: 8, fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                ],
+              );
+            }
+          ),
+          const SizedBox(width: 8),
+        ],
+      ),
       body: IndexedStack(
         index: _currentIndex,
         children: _views,

@@ -11,6 +11,7 @@ import 'package:bikibook/src/features/biki_prize/presentation/biki_prize_view.da
 import 'package:bikibook/src/features/biki_prize/presentation/upload_ticket_view.dart';
 import 'package:bikibook/src/features/biki_prize/presentation/prize_ticket_detail_view.dart';
 import 'package:bikibook/src/features/biki_prize/presentation/notification_history_view.dart';
+import 'package:bikibook/src/features/biki_prize/presentation/booking_history_view.dart';
 import 'package:bikibook/src/features/biki_prize/domain/prize_ticket.dart';
 import 'package:bikibook/src/models/models.dart';
 import 'package:bikibook/src/features/admin/presentation/admin_dashboard_view.dart';
@@ -69,6 +70,10 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/admin',
         builder: (context, state) => const AdminDashboardView(),
+      ),
+      GoRoute(
+        path: '/booking_history',
+        builder: (context, state) => const BookingHistoryView(),
       ),
       // Future routes can be added here
     ],

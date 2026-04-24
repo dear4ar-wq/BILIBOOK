@@ -92,6 +92,24 @@ class PrizeRepository {
     // Optionally update ticket status or just let admin handle it
   }
 
+  Future<void> addNotification({
+    required String title,
+    required String message,
+    required String type, // 'booking', 'victory', 'system'
+  }) async {
+    final userId = _client.auth.currentUser?.id;
+    if (userId == null) return;
+
+    await _client.from('prize_notifications').insert({
+      'user_id': userId,
+      'title': title,
+      'message': message,
+      'type': type,
+      'is_read': false,
+      'created_at': DateTime.now().toIso8601String(),
+    });
+  }
+
   // Placeholder for duplicate check
   Future<bool> isDuplicate(File imageFile) async {
     // In a real app, you might compare hashes or use AI

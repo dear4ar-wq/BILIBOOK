@@ -20,21 +20,26 @@ class BikiLogo extends StatelessWidget {
           height: size,
           width: size,
           decoration: BoxDecoration(
-            shape: BoxShape.circle,
+            color: const Color(0xFF0D1B2A), // Deep Navy for Logo Background
+            borderRadius: BorderRadius.circular(size * 0.3),
+            border: Border.all(color: kGoldAccent.withOpacity(0.3), width: 2),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.2),
-                blurRadius: 15,
-                spreadRadius: 2,
-                offset: const Offset(0, 5),
+                color: Colors.black.withOpacity(0.3),
+                blurRadius: 20,
+                offset: const Offset(0, 10),
+              ),
+              BoxShadow(
+                color: kGoldAccent.withOpacity(0.1),
+                blurRadius: 30,
+                spreadRadius: -5,
               ),
             ],
           ),
-          child: ClipOval(
-            child: Image.asset(
-              'assets/images/logo.png',
-              fit: BoxFit.cover,
-            ),
+          padding: EdgeInsets.all(size * 0.15),
+          child: Image.asset(
+            'assets/images/logo.png',
+            fit: BoxFit.contain,
           ),
         ),
         if (showText) ...[

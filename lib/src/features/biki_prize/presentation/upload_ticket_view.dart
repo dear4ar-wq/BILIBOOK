@@ -73,6 +73,14 @@ class _UploadTicketViewState extends State<UploadTicketView> {
         seriesCount: _seriesCount,
         ticketNumbers: _ticketNumberController.text.trim().isEmpty ? 'N/A' : _ticketNumberController.text.trim(),
       );
+
+      // Send Success Notification
+      await _repository.addNotification(
+        title: 'Ticket Uploaded Successfully!',
+        message: 'Your ticket ${_ticketNumberController.text.trim()} has been submitted for verification.',
+        type: 'booking',
+      );
+
       if (mounted) {
         context.pop();
         ScaffoldMessenger.of(context).showSnackBar(

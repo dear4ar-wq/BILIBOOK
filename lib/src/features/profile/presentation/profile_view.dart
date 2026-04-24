@@ -74,6 +74,10 @@ class ProfileView extends StatelessWidget {
           
           // Luxury Action List
           _buildProfileItem(context, Icons.security_rounded, 'KYC Verification', 'PENDING', kGoldAccent),
+          GestureDetector(
+            onTap: () => context.push('/booking_history'),
+            child: _buildProfileItem(context, Icons.receipt_long_rounded, 'Ticket Bookings', 'HISTORY', kNavyPrimary),
+          ),
           _buildProfileItem(context, Icons.account_balance_wallet_rounded, 'Gold Wallet', '₹0.00', kNavyPrimary),
           _buildProfileItem(context, Icons.military_tech_rounded, 'Rewards Points', '1,250 PTS', Colors.teal),
           _buildProfileItem(context, Icons.settings_rounded, 'Account Settings', 'MANAGE', Colors.grey),

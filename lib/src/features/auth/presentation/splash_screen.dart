@@ -33,21 +33,37 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kIvoryBackground,
-      body: SizedBox.expand(
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color(0xFF001F3F), // Deep Navy
+              Color(0xFF000D1A), // Darker Navy
+            ],
+          ),
+        ),
         child: Stack(
           alignment: Alignment.center,
           children: [
-            // Elegant Background Ornament
+            // Elegant Background Ornaments
             Positioned(
-              top: -100,
-              right: -100,
+              top: -150,
+              right: -150,
               child: Container(
-                width: 300,
-                height: 300,
+                width: 400,
+                height: 400,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: kGoldAccent.withOpacity(0.05),
+                  gradient: RadialGradient(
+                    colors: [
+                      kGoldAccent.withOpacity(0.1),
+                      Colors.transparent,
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -56,14 +72,46 @@ class _SplashScreenState extends State<SplashScreen> {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const BikiLogo(size: 140, showText: true),
+                // Animated or Glowing Logo Container
+                Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: kGoldAccent.withOpacity(0.2),
+                        blurRadius: 40,
+                        spreadRadius: 5,
+                      ),
+                    ],
+                  ),
+                  child: const BikiLogo(size: 160, showText: false),
+                ),
+                const SizedBox(height: 24),
+                const Text(
+                  'BikiBook',
+                  style: TextStyle(
+                    fontSize: 42,
+                    fontWeight: FontWeight.w900,
+                    color: Colors.white,
+                    letterSpacing: -1,
+                  ),
+                ),
+                const Text(
+                  'PREMIUM LOTTERY HUB',
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    color: kGoldAccent,
+                    letterSpacing: 4,
+                  ),
+                ),
                 const SizedBox(height: 48),
                 SizedBox(
-                  width: 50,
+                  width: 100,
                   child: LinearProgressIndicator(
-                    backgroundColor: kNavyPrimary.withOpacity(0.1),
+                    backgroundColor: Colors.white.withOpacity(0.1),
                     color: kGoldAccent,
-                    minHeight: 3,
+                    minHeight: 2,
                   ),
                 ),
               ],
@@ -72,30 +120,26 @@ class _SplashScreenState extends State<SplashScreen> {
             // Bottom Tagline
             Positioned(
               bottom: 60,
-              left: 40,
-              right: 40,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Text(
-                    'EXCELLENCE IN LOTTERY',
-                    textAlign: TextAlign.center,
+                  Text(
+                    'EXCELLENCE IN LOTTERY'.toUpperCase(),
                     style: TextStyle(
-                      fontSize: 12,
-                      color: kNavyPrimary,
-                      letterSpacing: 3,
+                      fontSize: 10,
+                      color: Colors.white.withOpacity(0.5),
+                      letterSpacing: 5,
                       fontWeight: FontWeight.w900,
                     ),
                   ),
-                  const SizedBox(height: 12),
-                  Text(
+                  const SizedBox(height: 8),
+                  const Text(
                     'BikiBook Gold Edition',
-                    textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 14,
-                      color: Colors.grey.shade500,
+                      color: kGoldAccent,
                       fontStyle: FontStyle.italic,
-                      fontWeight: FontWeight.w500,
+                      letterSpacing: 1,
                     ),
                   ),
                 ],
